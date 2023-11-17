@@ -22,8 +22,6 @@ struct CacheLine {
 template <class P>
 class Cache {
 private:
-
-
     unsigned int _cache_size_log2, _line_size_log2, _set_size_log2;
     unsigned int _num_lines_log2, _num_sets_log2;
     unsigned int _set_mask{}, _tag_mask{};
@@ -55,16 +53,13 @@ public:
         }
 
         memset(_cache.get(), 0xFF, (1<<cache_size_log2) * sizeof(CacheLine));
-
-        std::bitset<32> _line_mask_print(_set_mask), _tag_mask_print(_tag_mask);
-        std::cout << _line_mask_print << '\n' << _tag_mask_print << '\n';
     }
 
     bool check_cache(unsigned int address) {
         unsigned int tag = address & _tag_mask;
         unsigned int set = address & _set_mask;
 
-        /* num_sets * lines / set * bytes / line = byte offset */
+        /* num_sets * lines / set = lines offset */
         auto set_start = set * (1 << _set_size_log2);
 
         return P::access(_cache, set_start, tag, _set_size_log2);

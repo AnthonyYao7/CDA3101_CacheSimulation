@@ -12,7 +12,7 @@ bool FIFOPolicy::access(std::unique_ptr<CacheLine[]> &cache, unsigned int offset
             return true;
         }
 
-        if (cache[offset+i].tag == 0xFFFFFFFF) {
+        if (cache[offset+i].tag == 0xffffffff) {
             cache[offset+i].tag = tag;
             cache[offset+i].priority = i + 1;
             return false;

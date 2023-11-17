@@ -16,7 +16,7 @@ bool LRUPolicy::access(std::unique_ptr<CacheLine[]> &cache, unsigned int offset,
             break;
         }
 
-        if (c[offset+i].tag == 0xFFFFFFFF) {
+        if (c[offset+i].tag == 0xffffffff) {
             c[offset+i].tag = tag;
             c[offset+i].priority = i;
             return false;
@@ -26,7 +26,7 @@ bool LRUPolicy::access(std::unique_ptr<CacheLine[]> &cache, unsigned int offset,
     if (hit) {
         unsigned int i;
         for (i = 0; i < set_size; ++i) {
-            if (c[offset+i].tag == 0xFFFFFFFF) {
+            if (c[offset+i].tag == 0xffffffff) {
                 break;
             }
             if (c[offset+i].priority > c[offset+ind].priority) {
