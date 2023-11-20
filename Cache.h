@@ -52,6 +52,10 @@ public:
             }
         }
 
+//        std::bitset<32> set_mask_print(_set_mask), tag_mask_print(_tag_mask);
+//
+//        std::cout << set_mask_print << '\n' << tag_mask_print << '\n';
+
         memset(_cache.get(), 0xFF, (1<<cache_size_log2) * sizeof(CacheLine));
     }
 
@@ -63,6 +67,16 @@ public:
         auto set_start = set * (1 << _set_size_log2);
 
         return P::access(_cache, set_start, tag, _set_size_log2);
+    }
+
+    void print_cache() const {
+        unsigned int cache_size = 1 << _cache_size_log2;
+        for (unsigned int i = 0; i < cache_size; ++i) {
+            if (i % (1 << _set_size_log2) == 0) {
+                std::cout << "------------------------\n";
+            }
+            std::cout << _cache.get()[i].tag << " | " << _cache.get()[i].priority << '\n';
+        }
     }
 };
 

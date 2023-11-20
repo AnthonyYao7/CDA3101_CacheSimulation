@@ -19,7 +19,7 @@ bool FIFOPolicy::access(std::unique_ptr<CacheLine[]> &cache, unsigned int offset
         }
     }
 
-    unsigned int argmin, min=set_size;
+    unsigned int argmin, min=set_size+1;
     for (unsigned int i = 0u; i < set_size; ++i) {
         if (cache[offset+i].priority < min) {
             min = cache[offset+i].priority;
